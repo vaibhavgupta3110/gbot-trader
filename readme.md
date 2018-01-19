@@ -172,6 +172,7 @@ RSI_PERIOD                          | Period RSI | number | 14
 RSI_RANGE_SELL                      | RSI range for sell <br> Values are specified in the format **start/end** of the range. | string | 70/100
 RSI_RANGE_BUY                       | RSI range for buy | string | 1/30
 BBANDS_INTERVAL                     | Time-frame. Interval of interrogation of the prices (minutes) | number | 1
+CLOSE_GRID_OPPOSITE                 | Closes the opposite orders grid | boolean | false
 SAVE_PRICE_FILE                     | Save price cache to a file  | boolean | false
 PRICE_FILE_PATH                     | A custom path to the directory with the file | string | Folder with bot
 
@@ -192,7 +193,7 @@ ONE_ORDERS_BUY                      | Strategy: "One Buy a lot Sell" | boolean |
 ONE_ORDERS_OFFSET                   | The difference between LastPrice and first order in the stack of orders in %. <br> Will pull the order, if this value is exceeded. | number | 2
 ONE_ORDERS_PROFIT_PERCENT           | Specifies the percentage desired profit | number | 1
 INTEGRITY_CONTROL_ORDERS            | Integrity control orders (**soft** or **hard**) | string | soft
-TYPE_DATA_USED                      | Where to get information about the used orders: <br>  **active** - active orders <br> **history** - trading history | string | active
+TYPE_DATA_USED                      | Where to get information about the used orders: <br>  **active** - active orders <br> **history** - active orders + trading history | string | active
 FIRST_LOADING_HISTORY               | Download the history when you start the bot | boolean | false
 NUMBER_ROWS_LOAD_HISTORY            | Number of rows to load history | number | 100
 CYCLES_AUTO_EXIT                    | How many cycles to make the exit | number | 0
@@ -211,6 +212,7 @@ DELAY_TIME_CYCLES                   | The delay in seconds before the start of a
 > If the parameter **FIRST_LOADING_HISTORY** included, will be loaded into the cache the first `NUMBER_ROWS_LOAD_HISTORY` BUY orders before the first SELL order for the selected pair and put a SELL order on the basis of these data.
 
 > Option **DISABLE_CAPITALIZATION=true** activates `INTEGRITY_CONTROL_ORDERS` on **hard**.
+
 
 #### Additional options
 
@@ -234,24 +236,39 @@ HOST_SMTP                   | Mail server address   | string | smtp.yandex.ru
 EMAIL_AUTH_USER             | Authorization login of the mail server | string | -
 EMAIL_AUTH_PASS             | Mail server password | string | -
 
-### Other parameters
 
- Option | Description| Type | Default
+### Log
+
+ Option | Description|Type | Default
 --------|------------|-----|----------
-TIME_ZONE                   | Time zone [Database Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | string | Asia/Yekaterinburg
 LOG                         | Calculating log output of auto settings | boolean | false
 LOG_DEBUG                   | The output of the debug log | boolean | false
 LOG_TRANSPORTS              | Where to write the log: <br>  0 - console <br>  1 - file <br>  2 - console and file | number | 0 
 LOG_PATH                    | A custom path to the directory with the log | string | Folder with bot
 LOG_TREE                    | Save logs by directory year/month/day | boolean | false
-RESTART_TRADER_TIME         | How many seconds to wait before re-querying the data after network errors | number | 5
-EXCHANGE_FEE                | The Commission for transactions of the exchange | number | 0.25
-DELAY_REQUEST_API           | The delay of requests to the API in milliseconds | number | 500
-DELAY_BETWEEN_MODULES       | Then delay in seconds between execution of consecutive modules. | number | 3
+
+
+### Error processing
+
+ Option | Description|Type | Default
+--------|------------|-----|----------
 NUMBER_CHECK_DATA           | How many times to check the data. <br> Use the value 2 or more. <br> 0 - off | number | 0
+AUTO_RESTART_HANGING        | Auto-restart of the worker in case of his hangup (error message: "Worker does not meet" ) | boolean | false
+RESTART_TRADER_TIME         | How many seconds to wait before re-querying the data after network errors | number | 5
+
+
+### Other parameters
+
+ Option | Description| Type | Default
+--------|------------|-----|----------
+TIME_ZONE                   | Time zone [Database Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | string | Asia/Yekaterinburg
+EXCHANGE_FEE                | The Commission for transactions of the exchange | number | 0.25
+DELAY_REQUEST_API           | The delay of requests to the API in milliseconds | number | 200
+DELAY_BETWEEN_MODULES       | Then delay in seconds between execution of consecutive modules. | number | 3
 TITLE                       | The title of the console window. | string | GBot
 LANGUAGE                    | The language of the interface (`ru` or `en`) | string | ru
 NODE_ENV                    | Value **production** activate:<br>  1. notification about the start of a Telegram bot.<br> 2. error notifications by E-mail.<br> 3. prohibits the use of conf-dev.js.<br> 4. disabling colors in logs.<br>5. disables TITLE | string | dev
+BOT_TRADE                   | Allow trading | boolean | true
 URL_STATISTICS              | URL of the server where the statistics will be sent in post json format | string | -
 
 **Important:**
@@ -305,10 +322,10 @@ To **launch the control panel** in a Telegram, send a message to:
 
 /version            - The version of the bot
 /params             - Parameters which can be changed via Telegram
-/config             - Is a possible configuration parameters via a configuration file
+/params_no_comment
 /martin [cache]     - A theoretical calculation of the orders of the martingale (parameters are taken from config)
 /ticker coin_name   - Shows a quote of a pair coin_name
-/trade pair         - Switches to the specified trading pair
+/trade              - Switches to the specified trading pair
 /stop [codeExit]    - The application shutsdown. codeExit - an optional exit code.
 /sell_all           - Sell on the market immediately. (Attention: The sale will be made without confirmation!)
 /restart            - Restart GBot Trader
