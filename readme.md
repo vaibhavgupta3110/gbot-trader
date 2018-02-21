@@ -92,6 +92,7 @@ MARTINGALE_TYPE                     | Type Martingale: <br> 1 - exponential <br>
 CONTINUE_MARTINGALE_GRID            | To continue the grid Martingale when you restart the bot (**saves the order size**) | boolean | false
 TRADING_PRICE_RANGE                 | Price range allowed for bidding (Example: 3000/5000)<br>If not specified, no restrictions | string | -
 TRADING_PRICE_RANGE_PERCENT         | Percent to automatically create a range of prices allowed for bidding<br>If not specified, no restrictions | number | -
+IGNORE_ORDERS_AT_START              | Ignore the previously set orders at the start / restart of the bot | boolean | false
 
 **Important!**
 
@@ -225,6 +226,7 @@ NOTIFICATION_DEVIATION_PERCENT      | In what percentage should the price spike 
 MONITORING_PAIR                     | Pairs for monitoring. <br> (For example: `btc/usd, ltc/usd`, or just a pair currency, for example: `btc`). <br> If none of that is set, ALL available pairs will be monitored on the exchange. | string | All pairs
 NOTIFICATION_ERROR_COUNT            | The number of errors in 5 minutes for notification | number | 0
 NOTIFICATION_ORDER_IS_EXECUTED      | Notice of execution of one orders | boolean | false
+NOTIFICATION_END_GRID               | Notification of the end of the order grid. Notification will be sent if there are less than 3 orders left | boolean | false
 
 
 ### Email Error Notification
