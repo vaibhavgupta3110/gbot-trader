@@ -58,7 +58,11 @@
     "node-telegram-bot-api": "0.28.0",
     "node.liqui.io": "^1.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "nodemailer": "^4.4.2",
+=======
+    "nodemailer": "^4.6.0",
+>>>>>>> ee0bd4557fdb8d45dd079a1978fa773fce4d9f77
 =======
     "nodemailer": "^4.6.0",
 >>>>>>> ee0bd4557fdb8d45dd079a1978fa773fce4d9f77
