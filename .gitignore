@@ -57,3 +57,6 @@ jspm_packages
 .yarn-integrity
 node_modules/
 /build/conf-dev.js
+*.sh
+.env-sample
+.env-sample

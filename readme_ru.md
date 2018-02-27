@@ -142,7 +142,7 @@
 
 #### Получение Telegram ID
 
-1. Установите параметры API биржи `KEY`, `SECRET` и `TELEGRAM_TOKEN`.
+1. Установите параметры API биржи `EXCHANGE`, `KEY`, `SECRET` и `TELEGRAM_TOKEN`.
 2. Запустите GBot Trader.
 3. Напишите вашему Telegram боту (которого вы создали ранее через [@BotFather](https://core.telegram.org/bots#6-botfather)) любое сообщение, в ответе получите ваш id номер.
 4. Выключите GBot Trader.
@@ -160,7 +160,7 @@
 **SECRET**              | API secret| string | -
 **NAME_COIN**           | Торговая валюта <br>(FAQ п.49) | string | ltc
 **NAME_COIN_TWO**       | Торговая валюта <br>(FAQ п.49)| string | usd
-EXCHANGE                | Выбор биржи: <br> **wex** <br> **poloniex** (инвертированные пары) <br> **bittrex** (инвертированные пары) <br> **exmo** <br> **bitfinex** <br> **liqui** <br> **dsx** | string | wex
+**EXCHANGE**            | Выбор биржи: <br> **wex** <br> **poloniex** (инвертированные пары) <br> **bittrex** (инвертированные пары) <br> **exmo** <br> **bitfinex** <br> **liqui** <br> **dsx** | string | -
 EXCHANGE_HOST           | Адрес API биржи. Если основной адрес недоступен.<br>Exmo: https://api.exmo.com<br>Wex: wex.nz<br>Dsx: https://dsx.uk  | string | -
 TELEGRAM_TOKEN          | Ваш токен для Telegram | string | -
 TELEGRAM_ID             | ID вашего пользователя в Telegram | number | -
@@ -193,6 +193,7 @@ MARTINGALE_TYPE                     | Тип Мартингейла: <br> 1 - э
 CONTINUE_MARTINGALE_GRID            | Продолжать сетку Мартингейл при перезапуске бота (**сохраняет размер ордера**)<br>(FAQ п.43) | boolean | false
 TRADING_PRICE_RANGE                 | Диапазон цен разрешенных для торгов (Например: 3000/5000)<br>Если не указано, нет ограничений<br>(FAQ п.51)  | string | -
 TRADING_PRICE_RANGE_PERCENT         | Процент для автоматического создания диапазон цен разрешенных для торгов<br>Если не указано, нет ограничений<br>(FAQ п.51)  | number | -
+IGNORE_ORDERS_AT_START              | Игнорировать ранее установленные ордера при старте/рестарте бота. <br>(FAQ п.55) | boolean | false
 
 **Важно!**
 
@@ -321,6 +322,7 @@ STOP_LOSS_PERCENT                   | Уровень Stop Loss в процент
 TRAILING_STOP_PERCENT               | Уровень Trailing stop в процентах <br>(FAQ п.45) | number | 0
 DISABLE_CAPITALIZATION              | Отключить капитализацию в profit ордере <br>(FAQ п.47) | boolean | false
 CAPITALIZATION_BUY_ORDER            | Включает частичную капитализацию Buy ордера при DISABLE_CAPITALIZATION <br>(FAQ п.47) | boolean | false
+PARTIALLY_EXECUTED_GRID             | Учитывать частичное исполнение ордеров из сетки<br> Только для DISABLE_CAPITALIZATION=true | boolean | false
 STRATEGY_AUTO_REVERS                | Автопереключение стратегии на обратную <br>(FAQ п.52) | boolean | false
 OFFSET_LAST_ORDER_PERCENT           | Процент отдаления цены от последнего ордера чтобы сработало автопереключение стратегии <br>(FAQ п.52) | number | 5
 DELAY_TIME_CYCLES                   | Задержка в секундах перед началом нового цикла после исполнения профитного ордера  | number | 0
@@ -347,6 +349,7 @@ NOTIFICATION_DEVIATION_PERCENT      | Насколько процентов до
 MONITORING_PAIR                     | Пары для мониторинга.<br>(Например: `btc/usd, ltc/usd`. Или только валюта пары, например: `btc` ).<br>Если ничего не задано (**параметр не установлен**) будут мониториться **ВСЕ** доступные пары на бирже.<br> | string | Все пары
 NOTIFICATION_ERROR_COUNT            | Количество ошибок за 5 минут для уведомления через telegram | number | 0
 NOTIFICATION_ORDER_IS_EXECUTED      | Уведомление об исполнении профитного one orders | boolean | false
+NOTIFICATION_END_GRID               | Уведомление об окончании сетки ордеров. Будет выслано уведомление если осталось меньше 3 ордеров | boolean | false
 
 ### Уведомление об ошибках на Email
 Подробнее FAQ п.27
@@ -395,6 +398,14 @@ URL_STATISTICS              | URL адрес сервера куда будет 
 **Важно:**
 
 * Если вы изменили LANGUAGE, отправте команду `/start` в telegram бота для инициализации нового языка в telegram.
+
+### Сигналы
+ Signal | Actions
+--------|------------
+SIGINT  | Shutdown process
+SIGHUP  | Shutdown process
+SIGTERM | Shutdown process
+SIGUSR2 | Cycles Auto Exit = 1
 
 
 ## Запуск
